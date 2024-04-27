@@ -47,4 +47,21 @@ echo Selected file: %RANDOMFILE%
 :: Open the random file and wait for the application to close
 start "" /wait "%RANDOMFILE%"
 
+:: Ask user if they want to delete the file
+echo Do you want to delete %RANDOMFILE%? (Y/N)
+choice /C YN /N /M "Press Y for Yes, N for No: "
+if errorlevel 2 goto SkipDelete
+if errorlevel 1 goto DeleteFile
+
+:DeleteFile
+del "%RANDOMFILE%"
+echo File deleted.
+goto EndScript
+
+:SkipDelete
+echo File was not deleted.
+
+:EndScript
+echo Press any key to exit...
+pause
 endlocal
